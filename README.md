@@ -1,44 +1,59 @@
-# LuaU-AIDS — Luau Agentic Training Dataset
+# LuaU-AIDS — Luau Agentic Training Dataset (120MB)
 
-Training data that teaches AI models **how to think and act as a Luau programming agent** — from basics to advanced systems.
+Massive Luau training dataset for fine-tuning from scratch.
 
 **License:** MIT
 
-## Format
-
-3-message format: `system` → `user` → `assistant`
-
-The assistant follows an agent workflow:
-- **THINK** — Plan the approach, identify APIs, consider edge cases
-- **ACT** — Write the code with proper types
-- **VERIFY** — Check correctness, security, and cleanup
-
-## Learning Progression
-
-| Level | Topics | Count |
-|-------|--------|:-----:|
-| **0 — Luau Basics** | Variables, types, functions, tables, metatables, strings, control flow, errors | 6 |
-| **1 — Roblox APIs** | Services, instances, player lifecycle, events/connections, remotes, CFrame/Vector3 | 6 |
-| **2 — Simple Systems** | Kill bricks, shops, teleport pads, countdown timers, enemy AI, disappearing platforms | 6 |
-| **3 — Intermediate** | Inventory + DataStore, raycasting, ProximityPrompt, shop GUI, camera shake | 6 |
-| **4 — General** | 40+ topics covering common game dev patterns | 976 |
-
 ## Dataset
 
-**`dataset.jsonl`** — 1,000 entries, ~937 KB
+**22,035 entries** | **120 MB** | Split into parts under 100MB for GitHub
 
-- Starts from Luau language fundamentals
-- Builds up to Roblox API usage
-- Covers simple then complex game systems
-- Every entry shows THINK → ACT → VERIFY workflow
-- 327 entries include `--!strict` code
-- 30 game genre contexts
+| File | Size | Entries |
+|------|------|---------|
+| `dataset_part_00.jsonl` | 58 MB | 11,000 |
+| `dataset_part_01.jsonl` | 58 MB | 11,000 |
+| `dataset_part_02.jsonl` | 186 KB | 35 |
 
-## What This Teaches
+To combine: `cat dataset_part_*.jsonl > dataset.jsonl`
 
-A model trained on this data will:
-1. **Plan before coding** — think through architecture, APIs, and edge cases
-2. **Write correct Luau** — proper types, modern APIs, no deprecated patterns
-3. **Verify their work** — check for bugs, security issues, and cleanup
-4. **Start from fundamentals** — explain concepts from the ground up
-5. **Follow Roblox conventions** — Instance creation order, server authority, cleanup patterns
+## Format
+
+3-message agentic format: `system` → `user` → `assistant`
+
+Each assistant follows: **THINK** → **ACT** → **VERIFY**
+
+## 9 Template Types
+
+Each template generates thousands of variations with different:
+- Game genres (80+ contexts)
+- NPCs, items, abilities
+- Variant parameters (different internal structures)
+
+| Template | What it teaches |
+|----------|----------------|
+| **Signal** | 4 storage variants (dict, array, linked-list, deferred) |
+| **Maid** | 3 variants (standard, named, inspectable) |
+| **ObjectPool** | 15 object types (projectiles, VFX, damage numbers, etc.) |
+| **HealthSystem** | 4 features (shields, armor, regen, damage types) |
+| **Inventory** | 4 features (stacks, equipment, weight, durability) |
+| **SpatialGrid** | Proximity detection with O(1) operations |
+| **CooldownSystem** | Per-player ability tracking |
+| **RateLimiter** | Token bucket with burst support |
+| **StateMachine** | NPC AI with configurable states |
+
+## Regenerate
+
+```bash
+python3 generate_dataset.py
+```
+
+Generates 120MB+ in ~5 seconds. Adjust `TARGET_BYTES` in the script.
+
+## Code Quality
+
+- `--!strict` in every code block
+- Full type annotations (export type, typed parameters)
+- Section header dividers
+- Server-authoritative patterns
+- Memory-safe cleanup (PlayerRemoving, Destroy)
+- No deprecated Roblox APIs
