@@ -1,59 +1,44 @@
-# LuaU-AIDS — Luau Agentic Training Dataset (110MB)
+# LuaU-AIDS — Luau Quality Training Dataset
 
-**23,572 unique entries** for fine-tuning Luau AI models from scratch.
+**2,416 entries** focused on **real substance** — debugging, refactoring, performance, and multi-file reasoning.
 
 **License:** MIT
 
-## Quality Verified
+## What Changed
 
-| Check | Result |
-|-------|--------|
-| Total entries | 23,572 |
-| Unique code blocks | 23,572 (100% unique) |
-| Has `--!strict` | 100% |
-| Has THINK/ACT/VERIFY | 100% |
-| Has `export type` | 100% |
-| Structural errors | 0 |
-| TODO/FIXME/placeholder | 0 |
-| Deprecated APIs | 0 |
+| Before | After |
+|--------|-------|
+| 23,572 entries of cosmetic template variations | 2,416 entries with real engineering substance |
+| 100% same code structure, different game names | Real bugs, real refactoring, real performance issues |
+| Model learns to copy patterns | Model learns to **reason about problems** |
 
-## Dataset
+## Dataset Composition
 
-| File | Size | Entries |
-|------|------|---------|
-| `dataset_part_00.jsonl` | 54 MB | 12,000 |
-| `dataset_part_01.jsonl` | 52 MB | 11,572 |
+| Category | Count | What it teaches |
+|----------|:-----:|----------------|
+| **Refactoring** | ~1,980 | Clean up messy code — add types, module patterns, cleanup |
+| **Performance** | ~453 | Fix slow code — spatial hashing, pooling, caching |
+| **Debugging** | ~5 | Find and fix real security/logic bugs |
+| **Multi-file** | ~8 | Trace data flow across multiple files |
 
-Combine: `cat dataset_part_*.jsonl > dataset.jsonl`
-
-## Format
+## Entry Format
 
 3-message agentic format: `system` → `user` → `assistant`
 
-Each assistant follows: **THINK** (plan) → **ACT** (code) → **VERIFY** (check)
+Each assistant follows: **THINK** (analyze) → **ACT** (fix) → **VERIFY** (check)
 
-## 11 Template Types
+## Bug Types Covered
 
-| Template | Unique Variants | What it teaches |
-|----------|:-:|----------------|
-| **Signal** | 4 storage types | Event systems with error isolation |
-| **Maid** | 3 cleanup styles | Memory-safe resource management |
-| **ObjectPool** | 27 object types | GC-free instance recycling |
-| **HealthSystem** | 4 feature types | Server-authoritative damage pipelines |
-| **CooldownSystem** | per-ability | Zero-cost cooldown tracking |
-| **LootTable** | per-NPC/item | Weighted random generation |
-| **Timer** | per-ability | Frame-rate independent timing |
-| **RateLimiter** | per-context | Token bucket abuse prevention |
-| **StateMachine** | 6 state sets | NPC AI with validated transitions |
-| **SpatialGrid** | per-entity | O(1) proximity detection |
-| **Inventory** | per-item | Stack-based storage with capacity |
+- Client-controlled damage/price (security)
+- Memory leaks from forgotten connections
+- DataStore without pcall (crash on failure)
+- Touch detection without debounce/validation
+- Combat without server-side validation
+- Deprecated API usage (wait, spawn, delay)
+- Instance.new with parent in constructor
+- String concatenation in loops (O(n²))
+- Missing PlayerRemoving cleanup
 
-Each entry has unique context: game genre (80+), NPC type (36), item type (31), ability (26).
+## File
 
-## Regenerate
-
-```bash
-python3 generate_dataset.py
-```
-
-Edit `TARGET_BYTES` in the script to change size.
+`dataset.jsonl` — 2,416 entries, 7.6 MB
