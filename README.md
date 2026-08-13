@@ -1,45 +1,54 @@
-# LuaU-AIDS — Luau Agentic Training Dataset (120MB)
+# LuaU-AIDS — Luau Agentic Training Dataset (110MB)
 
-Massive Luau training dataset for fine-tuning from scratch.
+**23,572 unique entries** for fine-tuning Luau AI models from scratch.
 
 **License:** MIT
 
-## Dataset
+## Quality Verified
 
-**22,035 entries** | **120 MB** | Split into parts under 100MB for GitHub
+| Check | Result |
+|-------|--------|
+| Total entries | 23,572 |
+| Unique code blocks | 23,572 (100% unique) |
+| Has `--!strict` | 100% |
+| Has THINK/ACT/VERIFY | 100% |
+| Has `export type` | 100% |
+| Structural errors | 0 |
+| TODO/FIXME/placeholder | 0 |
+| Deprecated APIs | 0 |
+
+## Dataset
 
 | File | Size | Entries |
 |------|------|---------|
-| `dataset_part_00.jsonl` | 58 MB | 11,000 |
-| `dataset_part_01.jsonl` | 58 MB | 11,000 |
-| `dataset_part_02.jsonl` | 186 KB | 35 |
+| `dataset_part_00.jsonl` | 54 MB | 12,000 |
+| `dataset_part_01.jsonl` | 52 MB | 11,572 |
 
-To combine: `cat dataset_part_*.jsonl > dataset.jsonl`
+Combine: `cat dataset_part_*.jsonl > dataset.jsonl`
 
 ## Format
 
 3-message agentic format: `system` → `user` → `assistant`
 
-Each assistant follows: **THINK** → **ACT** → **VERIFY**
+Each assistant follows: **THINK** (plan) → **ACT** (code) → **VERIFY** (check)
 
-## 9 Template Types
+## 11 Template Types
 
-Each template generates thousands of variations with different:
-- Game genres (80+ contexts)
-- NPCs, items, abilities
-- Variant parameters (different internal structures)
+| Template | Unique Variants | What it teaches |
+|----------|:-:|----------------|
+| **Signal** | 4 storage types | Event systems with error isolation |
+| **Maid** | 3 cleanup styles | Memory-safe resource management |
+| **ObjectPool** | 27 object types | GC-free instance recycling |
+| **HealthSystem** | 4 feature types | Server-authoritative damage pipelines |
+| **CooldownSystem** | per-ability | Zero-cost cooldown tracking |
+| **LootTable** | per-NPC/item | Weighted random generation |
+| **Timer** | per-ability | Frame-rate independent timing |
+| **RateLimiter** | per-context | Token bucket abuse prevention |
+| **StateMachine** | 6 state sets | NPC AI with validated transitions |
+| **SpatialGrid** | per-entity | O(1) proximity detection |
+| **Inventory** | per-item | Stack-based storage with capacity |
 
-| Template | What it teaches |
-|----------|----------------|
-| **Signal** | 4 storage variants (dict, array, linked-list, deferred) |
-| **Maid** | 3 variants (standard, named, inspectable) |
-| **ObjectPool** | 15 object types (projectiles, VFX, damage numbers, etc.) |
-| **HealthSystem** | 4 features (shields, armor, regen, damage types) |
-| **Inventory** | 4 features (stacks, equipment, weight, durability) |
-| **SpatialGrid** | Proximity detection with O(1) operations |
-| **CooldownSystem** | Per-player ability tracking |
-| **RateLimiter** | Token bucket with burst support |
-| **StateMachine** | NPC AI with configurable states |
+Each entry has unique context: game genre (80+), NPC type (36), item type (31), ability (26).
 
 ## Regenerate
 
@@ -47,13 +56,4 @@ Each template generates thousands of variations with different:
 python3 generate_dataset.py
 ```
 
-Generates 120MB+ in ~5 seconds. Adjust `TARGET_BYTES` in the script.
-
-## Code Quality
-
-- `--!strict` in every code block
-- Full type annotations (export type, typed parameters)
-- Section header dividers
-- Server-authoritative patterns
-- Memory-safe cleanup (PlayerRemoving, Destroy)
-- No deprecated Roblox APIs
+Edit `TARGET_BYTES` in the script to change size.
