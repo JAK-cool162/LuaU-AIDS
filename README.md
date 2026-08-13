@@ -1,49 +1,44 @@
-# LuaU-AIDS — Luau Chain-of-Thought Training Dataset
+# LuaU-AIDS — Luau Agentic Training Dataset
 
-Training data that teaches AI models **how to think about Luau engineering problems**, not just what code to produce.
+Training data that teaches AI models **how to think and act as a Luau programming agent** — from basics to advanced systems.
 
 **License:** MIT
 
 ## Format
 
-Each entry: `system` → `user` (problem) → `assistant` (step-by-step reasoning + code)
+3-message format: `system` → `user` → `assistant`
 
-The assistant response contains **explicit reasoning steps** before the code:
-- What's the problem?
-- What are the options?
-- Why choose this approach?
-- What are the edge cases?
-- What security/performance concerns exist?
-- Then: the implementation
+The assistant follows an agent workflow:
+- **THINK** — Plan the approach, identify APIs, consider edge cases
+- **ACT** — Write the code with proper types
+- **VERIFY** — Check correctness, security, and cleanup
+
+## Learning Progression
+
+| Level | Topics | Count |
+|-------|--------|:-----:|
+| **0 — Luau Basics** | Variables, types, functions, tables, metatables, strings, control flow, errors | 6 |
+| **1 — Roblox APIs** | Services, instances, player lifecycle, events/connections, remotes, CFrame/Vector3 | 6 |
+| **2 — Simple Systems** | Kill bricks, shops, teleport pads, countdown timers, enemy AI, disappearing platforms | 6 |
+| **3 — Intermediate** | Inventory + DataStore, raycasting, ProximityPrompt, shop GUI, camera shake | 6 |
+| **4 — General** | 40+ topics covering common game dev patterns | 976 |
 
 ## Dataset
 
-**`dataset.jsonl`** — 1,000 entries, ~1.6 MB
+**`dataset.jsonl`** — 1,000 entries, ~937 KB
 
-| Category | Count | What it teaches |
-|----------|:-----:|----------------|
-| Design from requirements | 67 | Thinking through architecture before coding |
-| Debug broken code | 5+ | Identifying vulnerabilities and fixing them |
-| Security threat modeling | 10+ | Attack vectors and defensive patterns |
-| Performance analysis | 10+ | Why code is slow, how to fix it |
-| Architecture decisions | 10+ | Tradeoffs between approaches |
-| Module design (15 modules) | 247 | Why each design choice was made |
-| General reasoning | 600+ | Step-by-step engineering thinking |
+- Starts from Luau language fundamentals
+- Builds up to Roblox API usage
+- Covers simple then complex game systems
+- Every entry shows THINK → ACT → VERIFY workflow
+- 327 entries include `--!strict` code
+- 30 game genre contexts
 
-## 15 Modules Covered with Full Reasoning
+## What This Teaches
 
-Signal, Maid, ObjectPool, Timer, CooldownSystem, HealthSystem, Inventory, SpatialGrid, RateLimiter, StateMachine, PriorityQueue, LootTable, Spring, BitBuffer, InputManager
-
-Each module entry explains **why** — not just **what**.
-
-## Code Standards
-
-- `--!strict` in every entry
-- Full type annotations
-- No deprecated Roblox APIs
-- Server-authoritative patterns
-- Memory-safe cleanup
-
-## Use Case
-
-This dataset is designed for **training from scratch** or **fine-tuning** a model that reasons about Luau problems step by step. The CoT format teaches the model to think before coding, producing better-architected solutions.
+A model trained on this data will:
+1. **Plan before coding** — think through architecture, APIs, and edge cases
+2. **Write correct Luau** — proper types, modern APIs, no deprecated patterns
+3. **Verify their work** — check for bugs, security issues, and cleanup
+4. **Start from fundamentals** — explain concepts from the ground up
+5. **Follow Roblox conventions** — Instance creation order, server authority, cleanup patterns
